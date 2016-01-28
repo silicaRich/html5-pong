@@ -3,3 +3,5 @@ body {
   font-family: Verdana;
   font-size: 10pt;
 }
+
+canvas{    border: 1px solid blue; }
