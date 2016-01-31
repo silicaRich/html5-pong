@@ -46,8 +46,18 @@
 			  if (keydown.down) {
 				player.y += 5;
 			  }
+			  
+			  // ai movement
+			  if (ai.x == CANVAS_WIDTH-ai.width){			  
+				moveLeft = true;
+			  }
+			  if (ai.x == 0){
+				moveLeft = false;
+			  }
+			  moveLeft == true ? ai.x -= 5 : ai.x += 5;
 
 			  player.x = player.x.clamp(0, CANVAS_WIDTH - player.width);
+			  ai.x = ai.x.clamp(0, CANVAS_WIDTH - ai.width);
 			  
 			  handleCollisions();
 			
