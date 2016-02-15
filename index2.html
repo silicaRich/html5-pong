@@ -60,10 +60,11 @@
 
             // ball movement
             ball.direction.y == -1 ? ball.y -= 5 : ball.y += 5;
+            ball.direction.x == -1 ? ball.x -= 5 : ball.x += 5;
             
             player.x = player.x.clamp(0, CANVAS_WIDTH - player.width);
             ai.x = ai.x.clamp(0, CANVAS_WIDTH - ai.width);
-            ball.x = ai.x.clamp(0, CANVAS_WIDTH - ball.width);
+            ball.x = ball.x.clamp(0, CANVAS_WIDTH - ball.width);
             console.log(ball);
             handleCollisions();
             keepScore();
@@ -127,47 +128,64 @@
             a.y < b.y + b.height &&
             a.y + a.height > b.y;
         }
-
-        //function collides(ball, player) {
-        // return
-        // ball.x < player.x + player.width
-        // && ball.x + ball.width > player.x
-        // && ball.y < player.y + player.height
-        // && ball.y + ball.height > player.y;
-        //}
-
+        
         function handleCollisions() {
+            var ballMiddle = ball.x + (0.5 * ball.width);
             if (collides(ball, player)) {
-                player.explode();
+                var playerMiddle = player.x + (0.5 * player.width);
                 ball.direction.y = -1;
-                ball.direction.x = -1;
+                if (ballMiddle > playerMiddle) {
+                    ball.direction.x = 1;
+                }
+                else if (ballMiddle < playerMiddle) {
+                    ball.direction.x = -1;
+                }
+                else {                }
+                
             }
             if (collides(ball, ai)) {
-                player.explode();
-                ball.direction.y = +1;
-                ball.direction.x = +1;
+                var aiMiddle = ai.x + (0.5 * ai.width);
+                ball.direction.y = 1;
+                if (ballMiddle > aiMiddle) {
+                    ball.direction.x = 1;
+                }
+                else if (ballMiddle < aiMiddle) {
+                    ball.direction.x = -1;
+                }
+                else {                }
             }
         }
 
         function keepScore() {
-            if(ball.y == CANVAS_HEIGHT)
+            // If the AI Scores
+            if(ball.y >= CANVAS_HEIGHT)
             {
                 aiScore++;
-                ball.x = 0;
-                ball.y = 0;
+                ball.x = 240;
+                ball.y = 160;
+                ball.direction.x = 0;
+                ball.direction.y = -1;
                 ball.draw();
             }
-            else if(ball.y == 0){
+            // If the Player scores
+            else if(ball.y <= 0){
                 playerScore++;
-                ball.x = 0;
-                ball.y = 0;
+                ball.direction.x = 0;
+                ball.direction.y = 1;
+                ball.x = 240;
+                ball.y = 160;
                 ball.draw();
             }
-            console.log("Player Score:", playerScore);
-            console.log("AI Score:", aiScore);
+            $('.ai-score').text(aiScore);
+            $('.player-score').text(playerScore);
         }
 
         //]]>
     </script>
+
+
+    <p>AI Score: <span class="ai-score"></span></p>
+    <p>Player Score: <span class="player-score"></span></p>
+
 </body>
 </html>
