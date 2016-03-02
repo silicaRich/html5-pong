@@ -65,7 +65,7 @@
             player.x = player.x.clamp(0, CANVAS_WIDTH - player.width);
             ai.x = ai.x.clamp(0, CANVAS_WIDTH - ai.width);
             ball.x = ball.x.clamp(0, CANVAS_WIDTH - ball.width);
-            console.log(ball);
+         //   console.log(ball);
             handleCollisions();
             keepScore();
 
@@ -114,11 +114,11 @@
             width: 32,
             height: 32,
             draw: function () {
-              canvas.fillStyle = this.color;
-              canvas.fillRect(this.x, this.y, this.width, this.height);
-              // don't feel like dealing with arcs atm
-              //  canvas.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-              //  canvas.fill();            
+                canvas.fillStyle = this.color;
+                canvas.beginPath();
+                canvas.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+                canvas.closePath();
+                canvas.fill();       
             }
         }
 
