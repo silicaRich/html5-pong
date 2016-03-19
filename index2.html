@@ -22,7 +22,7 @@
         var canvas = canvasElement.get(0).getContext("2d");
         canvasElement.appendTo('body');
 
-        var FPS = 30;
+        var FPS = 40;
 
         setInterval(function () {
             update();
@@ -61,6 +61,14 @@
             // ball movement
             ball.direction.y == -1 ? ball.y -= 5 : ball.y += 5;
             ball.direction.x == -1 ? ball.x -= 5 : ball.x += 5;
+			
+			//ball hits the wall
+			if(ball.x >= 445){
+				ball.direction.x = -1;
+			}
+			if(ball.x <= 20){
+				ball.direction.x = 1;
+			}
             
             player.x = player.x.clamp(0, CANVAS_WIDTH - player.width);
             ai.x = ai.x.clamp(0, CANVAS_WIDTH - ai.width);
@@ -130,7 +138,7 @@
         }
         
         function handleCollisions() {
-            var ballMiddle = ball.x + (0.5 * ball.width);
+            var ballMiddle = ball.x + (0.5 * ball.width); 
             if (collides(ball, player)) {
                 var playerMiddle = player.x + (0.5 * player.width);
                 ball.direction.y = -1;
