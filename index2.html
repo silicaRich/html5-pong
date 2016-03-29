@@ -60,6 +60,13 @@
             if (ai.x == 0) {
                 moveLeft = false;
             }
+			
+			//ai tracking
+			//ai.trackBall = Math.random() < 0.5 ? true : false;
+			
+			if(ai.trackBall){
+				moveLeft = ball.direction.x == -1 ? true : false;			
+			}			
             moveLeft == true ? ai.x -= 5 : ai.x += 5;
 
             // ball movement
@@ -94,7 +101,7 @@
             color: "#00A",
             x: 220,
             y: 270,
-            width: 96,
+            width: 150,
             height: 32,
             draw: function () {
                 canvas.fillStyle = this.color;
@@ -109,7 +116,8 @@
             color: "#ccc",
             x: 0,
             y: 0,
-            width: 96,
+			trackBall:true,
+            width: 150,
             height: 32,
             draw: function () {
                 canvas.fillStyle = this.color;
@@ -134,11 +142,11 @@
             }
         }
 
-        function collides(a, b) {
-            return a.x < b.x + b.width &&
-            a.x + a.width > b.x &&
-            a.y < b.y + b.height &&
-            a.y + a.height > b.y;
+        function collides(ball, paddle) {
+            return ball.x < paddle.x + paddle.width &&
+            ball.x + ball.width > paddle.x &&
+            ball.y < paddle.y + paddle.height &&
+            ball.y + ball.height > paddle.y + (paddle.height/2);
         }
         
         function handleCollisions() {
