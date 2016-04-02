@@ -60,13 +60,7 @@
             if (ai.x == 0) {
                 moveLeft = false;
             }
-			
-			//ai tracking
-			//ai.trackBall = Math.random() < 0.5 ? true : false;
-			
-			if(ai.trackBall){
-				moveLeft = ball.direction.x == -1 ? true : false;			
-			}			
+					
             moveLeft == true ? ai.x -= 5 : ai.x += 5;
 
             // ball movement
@@ -198,9 +192,20 @@
                 ball.y = 160;
                 ball.draw();
             }
+			setAiTracking();
             $('.ai-score').text(aiScore);
             $('.player-score').text(playerScore);
         }
+		
+		function setAiTracking(){
+			//ai tracking
+			ai.trackBall = Math.random() < 0.5 ? true : false;
+			
+			if(ai.trackBall){
+				moveLeft = ball.direction.x == -1 ? true : false;			
+			}	
+            moveLeft == true ? ai.x -= 5 : ai.x += 5;
+		}
 
         //]]>
     </script>
