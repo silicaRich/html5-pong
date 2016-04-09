@@ -53,15 +53,22 @@
                 player.y += speed;
             }
 
-            // ai movement
+            // ai hits right wall
             if (ai.x == CANVAS_WIDTH - ai.width) {
-                moveLeft = true;
+                if (ball.direction.x == -1)
+                { 
+                    ai.direction.x = -1;
+                }
             }
+            // ai hits left wall
             if (ai.x == 0) {
-                moveLeft = false;
+                if (ball.direction.x == 1)
+                { 
+                    ai.direction.x = 1;
+                }
             }
 					
-            moveLeft == true ? ai.x -= 5 : ai.x += 5;
+            ai.direction.x ==  -1 ? ai.x -= 5 : ai.x += 5;
 
             // ball movement
             ball.direction.y == -1 ? ball.y -= 5 : ball.y += 5;
@@ -110,7 +117,8 @@
             color: "#ccc",
             x: 0,
             y: 0,
-			trackBall:true,
+            trackBall:true,
+            direction: { x: 1, y: 1 },
             width: 150,
             height: 32,
             draw: function () {
@@ -198,16 +206,23 @@
         }
 		
 		function setAiTracking(){
-			//ai tracking
-			ai.trackBall = Math.random() < 0.5 ? true : false;
+
+
+		    //ai tracking            
+		    //setTimeout(function () {
+		    //    ai.trackBall = Math.random() < 0.5 ? true : false;
+		    //}, 1000);
+
 			
-			if(ai.trackBall){
-				moveLeft = ball.direction.x == -1 ? true : false;			
-			}	
-            moveLeft == true ? ai.x -= 5 : ai.x += 5;
+		    if (ai.trackBall) {
+		        if (ball.direction.x == 1) {
+		            ai.direction.x = 1;
+		        }
+		        else
+		            ai.direction.x = -1;
+            }
 		}
 
-        //]]>
     </script>
 
 
